@@ -1,12 +1,14 @@
-import React from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import React from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const pages = [
+  { label: 'Trang chủ', id: 'home' },
   { label: 'Đăng nhsập', id: 'login' },
   { label: 'Đăng ký', id: 'register' },
   { label: 'Xác thực', id: 'verify' },
   { label: 'Thêm số điện thoại', id: 'add-phone' },
+  { label: 'Thêm thiết bị', id: 'add-device' },
   { label: 'Kết nối', id: 'connect' },
   { label: 'Quản lý thiết bị', id: 'devices' },
   { label: 'Lịch sử', id: 'history' },
@@ -18,8 +20,24 @@ export default function StartMenu() {
 
   const handlePress = (pageId: string) => {
     console.log(`Navigate to ${pageId}`);
-    if (pageId === 'login') {
-      router.push('./login');
+    switch (pageId) {
+      case 'login':
+        router.push('./login');
+        break;
+      case 'register':
+        router.push('./register');
+        break;
+      case 'verify':
+        router.push('./verify');
+        break;
+      case 'add-phone':
+        router.push('./add-phone');
+        break;
+      case 'add-device':
+        router.push('./add-device');
+        break;
+      default:
+        router.push(`./${pageId}`);
     }
   };
 

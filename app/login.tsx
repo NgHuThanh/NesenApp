@@ -1,17 +1,18 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
+  Dimensions,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
-  View,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  Image,
+  View
 } from 'react-native';
-import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -38,18 +39,17 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Header */}
-          <View style={styles.header}>
-            <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-              <Text style={styles.backText}>← Quay lại</Text>
-            </TouchableOpacity>
-          </View>
+    <ImageBackground 
+      source={require('../assets/images/background1.png')}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <SafeAreaView style={styles.safe}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
+          <ScrollView contentContainerStyle={styles.scrollContent}>
 
           {/* Logo Section */}
           <View style={styles.logoSection}>
@@ -64,13 +64,12 @@ export default function LoginScreen() {
           <View style={styles.formSection}>
             {/* Email/Phone Input */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Email/SDT</Text>
               <View style={styles.inputContainer}>
                 <Text style={styles.icon}>👤</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Nhập email hoặc số điện thoại"
-                  placeholderTextColor="#999"
+                  placeholder="Email/SDT"
+                  placeholderTextColor="#9ca3af"
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
@@ -81,13 +80,12 @@ export default function LoginScreen() {
 
             {/* Password Input */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Mật khẩu</Text>
               <View style={styles.inputContainer}>
                 <Text style={styles.icon}>🔒</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Nhập mật khẩu"
-                  placeholderTextColor="#999"
+                  placeholder="Mật khẩu"
+                  placeholderTextColor="#9ca3af"
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
@@ -140,23 +138,29 @@ export default function LoginScreen() {
               <Text style={styles.link}>Điều khoản và Điều kiện</Text> của Nesen
             </Text>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
   safe: {
     flex: 1,
-    backgroundColor: '#1a2332',
+    backgroundColor: 'transparent',
   },
   container: {
     flex: 1,
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingBottom: Dimensions.get('window').height * 0.05,
   },
   header: {
     marginTop: 20,
@@ -172,58 +176,60 @@ const styles = StyleSheet.create({
   },
   logoSection: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginTop: Dimensions.get('window').height * 0.08,
+    marginBottom: Dimensions.get('window').height * 0.1,
   },
   logo: {
-    fontSize: 36,
-    fontWeight: '700',
-    color: '#d4b896',
-    letterSpacing: 2,
-  },
-  tagline: {
-    fontSize: 12,
-    color: '#8cc0d6',
-    marginTop: 4,
+    fontSize: 47,
+    fontWeight: '500',
+    color: '#e2d1b2',
     letterSpacing: 1,
   },
+  tagline: {
+    fontSize: 15,
+    color: '#e2d1b2',
+    marginTop: -10,
+    letterSpacing: 0.8,
+  },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 25,
+    fontWeight: '400',
     color: '#ffffff',
-    marginBottom: 30,
+    marginBottom: 10,
     textAlign: 'center',
   },
   formSection: {
     marginBottom: 20,
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   inputGroup: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#ffffff',
-    marginBottom: 8,
+    marginBottom: 24,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    paddingHorizontal: 0,
+    paddingVertical: 3,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
   },
   icon: {
     fontSize: 18,
-    marginRight: 10,
-    color: '#8cc0d6',
+    marginRight: 12,
+    color: '#ffffff',
+    width: 24,
+    textAlign: 'center',
   },
   input: {
     flex: 1,
-    paddingVertical: 12,
-    fontSize: 14,
+    paddingVertical: 8,
+    fontSize: 15,
     color: '#ffffff',
+    paddingHorizontal: 0,
   },
   eyeIcon: {
     padding: 8,
@@ -235,11 +241,11 @@ const styles = StyleSheet.create({
   },
   helpText: {
     fontSize: 13,
-    color: '#8cc0d6',
-    textDecorationLine: 'underline',
+    color: '#e2d1b2',
+    
   },
   loginButton: {
-    backgroundColor: '#d4b896',
+    backgroundColor: '#e2d1b2',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
@@ -262,7 +268,7 @@ const styles = StyleSheet.create({
   },
   dividerText: {
     marginHorizontal: 12,
-    color: '#8cc0d6',
+    color: '#85959d',
     fontSize: 12,
   },
   socialSection: {
@@ -286,13 +292,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
   },
-  footerText: {
-    fontSize: 11,
-    color: '#8cc0d6',
-    textAlign: 'center',
-    lineHeight: 16,
-  },
+  footerText: { position: 'absolute', bottom: Dimensions.get('window').height * -0.15, width: '100%', fontSize: 11, color: '#909fa6', textAlign: 'center', lineHeight: 16, },
   link: {
     textDecorationLine: 'underline',
+    color: '#e2d1b2'
   },
 });
