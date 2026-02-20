@@ -18,15 +18,18 @@ export default function Home() {
       <ScrollView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <View>
+          <View style={styles.headerTopRow}>
             <Text style={styles.logo}>nesen</Text>
-            <Text style={styles.greeting}>Chào buổi sáng,</Text>
-            <Text style={styles.userName}>Alex Nguyen</Text>
-          </View>
-          <View style={styles.headerRight}>
             <TouchableOpacity style={styles.notifBtn}>
               <Text style={styles.notifIcon}>🔔</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.greetingCard}>
+            <View>
+            <Text style={styles.greeting}>Chào buổi sáng,</Text>
+            <Text style={styles.userName}>Alex Nguyen</Text>
+            </View>
             <View style={styles.weather}>
               <Text style={styles.weatherIcon}>☁️</Text>
               <View>
@@ -161,17 +164,28 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#0f1e2e' },
   container: { flex: 1 },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
     padding: 20,
     paddingTop: 16,
+  },
+  headerTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  greetingCard: {
+    backgroundColor: 'rgba(30, 58, 80, 0.6)',
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   logo: {
     color: '#fff',
     fontSize: 28,
     fontWeight: '700',
-    marginBottom: 12,
   },
   greeting: {
     color: '#9ca3af',
@@ -182,12 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-  headerRight: {
-    alignItems: 'flex-end',
-  },
-  notifBtn: {
-    marginBottom: 8,
-  },
+  notifBtn: {},
   notifIcon: {
     fontSize: 20,
   },

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const pages = [
   { label: 'Trang chủ', id: 'home' },
@@ -62,8 +62,8 @@ export default function StartMenu() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#ffffff' },
-  container: { padding: 24, alignItems: 'center' },
+  safe: { flex: 1, backgroundColor: 'transparent' },
+  container: { flex: 1, paddingHorizontal: 20, paddingBottom: Dimensions.get('window').height * 0.05 },
   header: { fontSize: 22, fontWeight: '700', marginBottom: 16 },
   grid: { width: '100%' },
   btn: {
