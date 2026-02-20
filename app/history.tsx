@@ -114,7 +114,7 @@ export default function History() {
         ))}
       </ScrollView>
 
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.containerContent}>
         {/* Activity List Header */}
         <View style={styles.listHeader}>
           <Text style={styles.listTitle}>DANH SÁCH HOẠT ĐỘNG</Text>
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   container: { flex: 1, paddingHorizontal: 16 },
+  containerContent: { paddingBottom: 120 },
   listHeader: {
     flexDirection: 'row',
     alignItems: 'center',

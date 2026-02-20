@@ -13,7 +13,7 @@ export default function Account() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.containerContent}>
         {/* User Profile Header */}
         <View style={styles.profileHeader}>
           <View style={styles.avatar}>
@@ -82,6 +82,7 @@ function MenuItem({ icon, label, onPress }: MenuItemProps) {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#0b1720' },
   container: { flex: 1 },
+  containerContent: { paddingBottom: 120 },
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',

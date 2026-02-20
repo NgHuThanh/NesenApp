@@ -91,7 +91,7 @@ export default function Devices() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.containerContent}>
         <View style={styles.listHeader}>
           <Text style={styles.listTitle}>DANH SÁCH THIẾT BỊ</Text>
           <View style={styles.badge}>
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
   },
   addBtnText: { color: '#fff', fontSize: 24, fontWeight: '300' },
   container: { flex: 1, padding: 16 },
+  containerContent: { paddingBottom: 120 },
   listHeader: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -21,13 +21,7 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
-    if (!email || !password) {
-      alert('Vui lòng nhập Email/SDT và Mật khẩu');
-      return;
-    }
-    // TODO: Xử lý đăng nhập tại đây
-    console.log('Đăng nhập với:', email, password);
-    alert('Đăng nhập thành công!');
+    router.replace('./welcome');
   };
 
   const handleForgotPassword = () => {

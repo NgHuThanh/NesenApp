@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.containerContent}>
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.headerTopRow}>
@@ -88,7 +88,13 @@ export default function Home() {
                   <TouchableOpacity 
                     key={device.id} 
                     style={styles.deviceCard}
-                    onPress={() => router.push('./devices')}
+                    onPress={() => {
+                      if (device.name.includes('Đèn')) {
+                        router.push('./light-control');
+                        return;
+                      }
+                      router.push('./devices');
+                    }}
                   >
                     <View style={styles.deviceTopRow}>
                       <View style={styles.deviceInfoRow}>
@@ -182,6 +188,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#0f1e2e' },
   container: { flex: 1 },
+  containerContent: { paddingBottom: 120 },
   header: {
     padding: 20,
     paddingTop: 16,
