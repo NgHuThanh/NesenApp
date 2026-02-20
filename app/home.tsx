@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const DEMO_DEVICES = [
   { id: '1', name: 'Đèn ngủ', location: 'Phòng ngủ', isConnected: true },
@@ -8,6 +8,8 @@ const DEMO_DEVICES = [
   { id: '3', name: 'Công tắc', location: 'Phòng ngủ', isConnected: false },
   { id: '4', name: 'Cảm biến', location: 'Phòng ngủ', isConnected: true },
 ];
+
+const screenHeight = Dimensions.get('window').height;
 
 export default function Home() {
   const router = useRouter();
@@ -44,29 +46,32 @@ export default function Home() {
           <>
             {/* Sleep Quality Stats */}
             <View style={styles.statsContainer}>
-              <View style={styles.statCard}>
-                <Text style={styles.statLabel}>Chất lượng giấc ngủ</Text>
-                <View style={styles.scoreCircle}>
-                  <Text style={styles.scoreValue}>90</Text>
-                  <Text style={styles.scoreLabel}>điểm</Text>
+              <View style={styles.sleepCard}>
+                <View style={styles.sleepLeft}>
+                  <Text style={styles.statLabel} numberOfLines={1}>Chất lượng giấc ngủ</Text>
+                  <View style={styles.scoreCircle}>
+                    <Text style={styles.scoreValue}>90</Text>
+                    <Text style={styles.scoreLabel}>điểm</Text>
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.statColumn}>
-                <View style={styles.statMiniCard}>
-                  <Text style={styles.statMiniLabel}>Thời gian ngủ</Text>
-                  <Text style={styles.statMiniValue}>21:30:40</Text>
-                </View>
-                <View style={styles.statMiniCard}>
-                  <Text style={styles.statMiniLabel}>Giấc ngủ sâu</Text>
-                  <Text style={styles.statMiniValue}>05:30:40</Text>
-                </View>
-              </View>
+                <View style={styles.sleepRight}>
+                  <View style={styles.sleepTopRow}>
+                    <View style={styles.sleepMetricBlock}>
+                      <Text style={styles.statMiniLabel} numberOfLines={1}>Thời gian ngủ</Text>
+                      <Text style={styles.statMiniValue} numberOfLines={1}>21:30:40</Text>
+                    </View>
+                    <View style={styles.innerDivider} />
+                    <View style={styles.sleepMetricBlock}>
+                      <Text style={styles.statMiniLabel} numberOfLines={1}>REM</Text>
+                      <Text style={styles.statMiniValue} numberOfLines={1}>00:40</Text>
+                    </View>
+                  </View>
 
-              <View style={styles.statColumn}>
-                <View style={styles.statMiniCard}>
-                  <Text style={styles.statMiniLabel}>REM</Text>
-                  <Text style={styles.statMiniValue}>00:40</Text>
+                  <View style={styles.deepSleepPill}>
+                    <Text style={styles.statMiniLabel} numberOfLines={1}>Giấc ngủ sâu</Text>
+                    <Text style={styles.deepSleepValue} numberOfLines={1}>05:30:40</Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -75,9 +80,7 @@ export default function Home() {
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>THIẾT BỊ ĐÃ KẾT NỐI</Text>
-                <View style={styles.countBadge}>
-                  <Text style={styles.countText}>{DEMO_DEVICES.length}</Text>
-                </View>
+                <Text style={styles.countNumber}>{DEMO_DEVICES.length}</Text>
               </View>
 
               <View style={styles.devicesGrid}>
@@ -87,22 +90,33 @@ export default function Home() {
                     style={styles.deviceCard}
                     onPress={() => router.push('./devices')}
                   >
-                    <View style={styles.deviceIcon}>
-                      <Text style={styles.deviceEmoji}>
-                        {device.name.includes('Đèn') ? '💡' : 
-                         device.name.includes('Đồng hồ') ? '⏰' :
-                         device.name.includes('Công tắc') ? '🔌' : '📡'}
-                      </Text>
+                    <View style={styles.deviceTopRow}>
+                      <View style={styles.deviceInfoRow}>
+                        <View style={styles.deviceIcon}>
+                          <Text style={styles.deviceEmoji}>
+                            {device.name.includes('Đèn') ? '💡' : 
+                             device.name.includes('Đồng hồ') ? '⏰' :
+                             device.name.includes('Công tắc') ? '🔌' : '📡'}
+                          </Text>
+                        </View>
+                        <View style={styles.deviceInfoText}>
+                          <Text style={styles.deviceName}>{device.name}</Text>
+                          <Text style={styles.deviceLocation}>{device.location}</Text>
+                        </View>
+                      </View>
+                      <View style={styles.deviceChevronCircle}>
+                        <Text style={styles.deviceChevron}>›</Text>
+                      </View>
                     </View>
-                    <Text style={styles.deviceName}>{device.name}</Text>
-                    <Text style={styles.deviceLocation}>{device.location}</Text>
+
                     <View style={styles.deviceStatus}>
-                      <View style={[styles.statusDot, device.isConnected && styles.statusDotActive]} />
+                      <View style={[styles.statusIconCircle, device.isConnected ? styles.statusIconCircleActive : styles.statusIconCircleInactive]}>
+                        <Text style={styles.statusIconText}>{device.isConnected ? '✓' : '×'}</Text>
+                      </View>
                       <Text style={[styles.statusText, device.isConnected && styles.statusTextActive]}>
                         {device.isConnected ? 'Đang kết nối' : 'Không kết nối'}
                       </Text>
                     </View>
-                    <Text style={styles.deviceChevron}>›</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -126,29 +140,34 @@ export default function Home() {
 
         {/* About Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>VỀ CHÚNG TÔI</Text>
+          <Text style={styles.aboutSectionTitle}>VỀ CHÚNG TÔI</Text>
 
           <TouchableOpacity style={styles.aboutCard}>
             <View style={styles.aboutContent}>
               <Text style={styles.aboutTitle}>Giới thiệu</Text>
               <Text style={styles.aboutDesc}>Khám phá hành trình và sứ mệnh của Nesen</Text>
             </View>
-            <View style={styles.aboutIcon}>
-              <Text style={styles.aboutEmoji}>🌙</Text>
-              <Text style={styles.aboutEmoji2}>💡</Text>
+            <View style={styles.aboutArt}>
+              <Text style={styles.aboutMoon}>🌙</Text>
+              <Text style={styles.aboutLamp}>💡</Text>
+              <Text style={styles.aboutSofa}>🛋️</Text>
             </View>
           </TouchableOpacity>
 
           <View style={styles.aboutRow}>
             <TouchableOpacity style={styles.aboutSmallCard}>
-              <Text style={styles.aboutSmallIcon}>🛍️</Text>
-              <Text style={styles.aboutSmallTitle}>Sản phẩm</Text>
+              <View style={styles.aboutSmallTop}>
+                <Text style={styles.aboutSmallIcon}>⌂</Text>
+                <Text style={styles.aboutSmallTitle}>Sản phẩm</Text>
+              </View>
               <Text style={styles.aboutSmallDesc}>Xem các sản phẩm hỗ trợ</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.aboutSmallCard}>
-              <Text style={styles.aboutSmallIcon}>📰</Text>
-              <Text style={styles.aboutSmallTitle}>Tin tức</Text>
+              <View style={styles.aboutSmallTop}>
+                <Text style={styles.aboutSmallIcon}>◷</Text>
+                <Text style={styles.aboutSmallTitle}>Tin tức</Text>
+              </View>
               <Text style={styles.aboutSmallDesc}>Tin tức và chia sẻ hữu ích mỗi ngày</Text>
             </TouchableOpacity>
           </View>
@@ -175,17 +194,17 @@ const styles = StyleSheet.create({
   },
   greetingCard: {
     backgroundColor: 'rgba(30, 58, 80, 0.6)',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   logo: {
     color: '#fff',
-    fontSize: 28,
-    fontWeight: '700',
+    fontSize: 24,
+    fontWeight: '400',
   },
   greeting: {
     color: '#9ca3af',
@@ -218,62 +237,94 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   statsContainer: {
-    flexDirection: 'row',
     paddingHorizontal: 16,
-    gap: 8,
-    marginBottom: 24,
+    marginBottom: 12,
   },
-  statCard: {
-    flex: 1,
+  sleepCard: {
     backgroundColor: 'rgba(30, 58, 80, 0.6)',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 16,
+    height: screenHeight / 8,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  sleepLeft: {
+    width: '40%',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sleepRight: {
+    width: '60%',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(148, 163, 184, 0.2)',
+    paddingLeft: 8,
+    justifyContent: 'center',
+  },
+  sleepTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  sleepMetricBlock: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  innerDivider: {
+    width: 1,
+    backgroundColor: 'rgba(148, 163, 184, 0.2)',
+    marginHorizontal: 6,
+  },
+  deepSleepPill: {
+    backgroundColor: 'rgba(80, 153, 181, 0.35)',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    minHeight: 28,
+  },
+  deepSleepValue: {
+    color: '#dbeafe',
+    fontSize: 13,
+    fontWeight: '700',
   },
   statLabel: {
     color: '#9ca3af',
-    fontSize: 11,
-    marginBottom: 12,
+    fontSize: 9,
+    marginBottom: 4,
     textAlign: 'center',
   },
   scoreCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    borderWidth: 4,
-    borderColor: '#d4a574',
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 3,
+    borderColor: '#f0dfc2',
     alignItems: 'center',
     justifyContent: 'center',
   },
   scoreValue: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700',
+    lineHeight: 24,
   },
   scoreLabel: {
-    color: '#9ca3af',
-    fontSize: 11,
-  },
-  statColumn: {
-    flex: 1,
-    gap: 8,
-  },
-  statMiniCard: {
-    backgroundColor: 'rgba(30, 58, 80, 0.6)',
-    borderRadius: 12,
-    padding: 12,
-    flex: 1,
-    justifyContent: 'center',
+    color: '#d1d5db',
+    fontSize: 8,
   },
   statMiniLabel: {
-    color: '#9ca3af',
-    fontSize: 10,
-    marginBottom: 4,
+    color: '#94a3b8',
+    fontSize: 9,
+    marginBottom: 1,
   },
   statMiniValue: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
+    color: '#dbeafe',
+    fontSize: 13,
+    fontWeight: '700',
   },
   emptyState: {
     backgroundColor: 'rgba(30, 58, 80, 0.4)',
@@ -305,7 +356,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   section: {
-    marginBottom: 24,
+    marginBottom: 0,
     paddingHorizontal: 16,
   },
   sectionHeader: {
@@ -314,150 +365,202 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   sectionTitle: {
-    color: '#60a5fa',
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-    marginRight: 8,
+    color: '#7593ac',
+    fontSize: 16,
+    fontWeight: '400',
+    letterSpacing: 0.2,
+    marginRight: 10,
   },
-  countBadge: {
-    backgroundColor: 'rgba(96, 165, 250, 0.2)',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 10,
-  },
-  countText: {
-    color: '#60a5fa',
-    fontSize: 11,
-    fontWeight: '600',
+  countNumber: {
+    color: '#dbeafe',
+    fontSize: 14,
+    fontWeight: '500',
   },
   devicesGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    justifyContent: 'space-between',
   },
   deviceCard: {
     width: '48%',
-    backgroundColor: 'rgba(30, 58, 80, 0.6)',
-    borderRadius: 12,
-    padding: 16,
-    position: 'relative',
+    backgroundColor: 'rgba(54, 80, 116, 0.55)',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 10,
+    marginBottom: 10,
+  },
+  deviceTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  deviceInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  deviceInfoText: {
+    flex: 1,
   },
   deviceIcon: {
-    width: 48,
-    height: 48,
-    backgroundColor: 'rgba(212, 165, 116, 0.2)',
+    width: 38,
+    height: 38,
+    backgroundColor: 'rgba(230, 213, 190, 0.2)',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 12,
+    marginRight: 10,
   },
   deviceEmoji: {
-    fontSize: 24,
+    fontSize: 20,
   },
   deviceName: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   deviceLocation: {
-    color: '#9ca3af',
-    fontSize: 12,
-    marginBottom: 8,
+    color: '#a7b4c4',
+    fontSize: 10,
   },
   deviceStatus: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(148, 163, 184, 0.15)',
+    marginTop: 10,
+    paddingTop: 8,
   },
-  statusDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#6b7280',
+  statusIconCircle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 6,
   },
-  statusDotActive: {
-    backgroundColor: '#10b981',
+  statusIconCircleActive: {
+    backgroundColor: '#1ec98d',
+  },
+  statusIconCircleInactive: {
+    backgroundColor: '#637186',
+  },
+  statusIconText: {
+    color: '#eaf6ff',
+    fontSize: 9,
+    fontWeight: '700',
   },
   statusText: {
-    color: '#6b7280',
-    fontSize: 11,
+    color: '#8492a5',
+    fontSize: 9,
+    fontWeight: '600',
   },
   statusTextActive: {
-    color: '#10b981',
+    color: '#33d39b',
+  },
+  deviceChevronCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(15, 30, 46, 0.35)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   deviceChevron: {
-    position: 'absolute',
-    top: 12,
-    right: 12,
-    color: '#9ca3af',
-    fontSize: 20,
+    color: '#9fb1c7',
+    fontSize: 18,
+    lineHeight: 20,
+    marginLeft: 1,
   },
   aboutCard: {
-    backgroundColor: 'rgba(30, 58, 80, 0.6)',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: 'rgba(58, 84, 120, 0.6)',
+    borderRadius: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+    minHeight: 98,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 12,
   },
+  aboutSectionTitle: {
+    color: '#7593ac',
+    fontSize: 16,
+    fontWeight: '400',
+    marginBottom: 12,
+  },
   aboutContent: {
     flex: 1,
+    paddingRight: 10,
   },
   aboutTitle: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   aboutDesc: {
-    color: '#9ca3af',
+    color: '#aebcc9',
     fontSize: 12,
-    lineHeight: 18,
+    lineHeight: 22,
   },
-  aboutIcon: {
+  aboutArt: {
     position: 'relative',
-    width: 60,
-    height: 60,
+    width: 92,
+    height: 70,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
-  aboutEmoji: {
-    fontSize: 32,
+  aboutMoon: {
+    fontSize: 12,
     position: 'absolute',
     top: 0,
+    right: 18,
+  },
+  aboutLamp: {
+    fontSize: 24,
+    position: 'absolute',
+    top: 10,
     right: 0,
   },
-  aboutEmoji2: {
-    fontSize: 28,
+  aboutSofa: {
+    fontSize: 34,
     position: 'absolute',
     bottom: 0,
-    right: 10,
+    right: 14,
   },
   aboutRow: {
     flexDirection: 'row',
-    gap: 12,
+    justifyContent: 'space-between',
   },
   aboutSmallCard: {
-    flex: 1,
-    backgroundColor: 'rgba(30, 58, 80, 0.6)',
+    width: '48%',
+    backgroundColor: 'rgba(58, 84, 120, 0.6)',
     borderRadius: 12,
-    padding: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 14,
+  },
+  aboutSmallTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   aboutSmallIcon: {
-    fontSize: 24,
-    marginBottom: 8,
+    fontSize: 14,
+    color: '#d8c39f',
+    marginRight: 8,
   },
   aboutSmallTitle: {
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
-    marginBottom: 4,
   },
   aboutSmallDesc: {
-    color: '#9ca3af',
-    fontSize: 11,
-    lineHeight: 16,
+    color: '#aebcc9',
+    fontSize: 12,
+    lineHeight: 18,
   },
   bottomSpacer: {
     height: 40,
