@@ -1,6 +1,7 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React, { useMemo, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Animated, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const PRESETS = {
   nong: { label: 'Nông', scale: 1.7, topRatio: 0.48 },
@@ -13,6 +14,42 @@ type PresetKey = keyof typeof PRESETS;
 export default function TaoObjectScreen() {
   const router = useRouter();
   const [presetKey, setPresetKey] = useState<PresetKey>('sau');
+  const backgroundAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(backgroundAnim, {
+          toValue: 1,
+          duration: 5000,
+          useNativeDriver: false,
+        }),
+        Animated.timing(backgroundAnim, {
+          toValue: 2,
+          duration: 5000,
+          useNativeDriver: false,
+        }),
+        Animated.timing(backgroundAnim, {
+          toValue: 3,
+          duration: 5000,
+          useNativeDriver: false,
+        }),
+        Animated.timing(backgroundAnim, {
+          toValue: 0,
+          duration: 5000,
+          useNativeDriver: false,
+        }),
+      ])
+    );
+
+    animation.start();
+    return () => animation.stop();
+  }, [backgroundAnim]);
+
+  const animatedBackgroundColor = backgroundAnim.interpolate({
+    inputRange: [0, 1, 2, 3],
+    outputRange: ['#efefef', '#e8edf7', '#f2e8d8', '#e4f0ea'],
+  });
 
   const preset = useMemo(() => PRESETS[presetKey], [presetKey]);
   const bigCircleSize = 220 * preset.scale;
@@ -21,82 +58,92 @@ export default function TaoObjectScreen() {
   const smallTop = -(160 * preset.topRatio);
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <Text style={styles.backText}>‹ Quay lại</Text>
-      </TouchableOpacity>
+    <Animated.View style={[styles.screenBackground, { backgroundColor: animatedBackgroundColor }]}> 
+      <SafeAreaView style={styles.screen}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backText}>‹ Quay lại</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.title}>Tạo object</Text>
+        <Text style={styles.title}>Tạo object</Text>
 
-      <View style={styles.presetRow}>
-        {(Object.keys(PRESETS) as PresetKey[]).map((key) => {
-          const active = key === presetKey;
-          return (
-            <TouchableOpacity
-              key={key}
-              style={[styles.presetBtn, active && styles.presetBtnActive]}
-              onPress={() => setPresetKey(key)}
-            >
-              <Text style={[styles.presetText, active && styles.presetTextActive]}>{PRESETS[key].label}</Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-
-      <View style={styles.previewWrap}>
-        <Text style={styles.caption}>Object gốc (ảnh 2)</Text>
-        <View style={styles.objectSquare}>
-          <View
-            style={[
-              styles.cutCircle,
-              {
-                width: bigCircleSize,
-                height: bigCircleSize,
-                borderRadius: bigCircleSize / 2,
-                top: bigTop,
-              },
-            ]}
-          />
+        <View style={styles.presetRow}>
+          {(Object.keys(PRESETS) as PresetKey[]).map((key) => {
+            const active = key === presetKey;
+            return (
+              <TouchableOpacity
+                key={key}
+                style={[styles.presetBtn, active && styles.presetBtnActive]}
+                onPress={() => setPresetKey(key)}
+              >
+                <Text style={[styles.presetText, active && styles.presetTextActive]}>{PRESETS[key].label}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
 
-        <Text style={styles.caption}>Ghép 2 object (ảnh 3)</Text>
-        <View style={styles.pairRow}>
-          <View style={styles.objectSquareSmall}>
+        <View style={styles.previewWrap}>
+          <Text style={styles.caption}>Object gốc (ảnh 2)</Text>
+          <LinearGradient
+            colors={['#8ec1de', '#eef3f8']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.objectSquare}
+          >
             <View
               style={[
-                styles.cutCircleSmall,
+                styles.cutCircle,
                 {
-                  width: smallCircleSize,
-                  height: smallCircleSize,
-                  borderRadius: smallCircleSize / 2,
-                  top: smallTop,
+                  width: bigCircleSize,
+                  height: bigCircleSize,
+                  borderRadius: bigCircleSize / 2,
+                  top: bigTop,
                 },
               ]}
             />
-          </View>
-          <View style={[styles.objectSquareSmall, styles.mirrorX]}>
-            <View
-              style={[
-                styles.cutCircleSmall,
-                {
-                  width: smallCircleSize,
-                  height: smallCircleSize,
-                  borderRadius: smallCircleSize / 2,
-                  top: smallTop,
-                },
-              ]}
-            />
+          </LinearGradient>
+
+          <Text style={styles.caption}>Ghép 2 object (ảnh 3)</Text>
+          <View style={styles.pairRow}>
+            <View style={styles.objectSquareSmall}>
+              <View
+                style={[
+                  styles.cutCircleSmall,
+                  {
+                    width: smallCircleSize,
+                    height: smallCircleSize,
+                    borderRadius: smallCircleSize / 2,
+                    top: smallTop,
+                  },
+                ]}
+              />
+            </View>
+            <View style={[styles.objectSquareSmall, styles.mirrorX]}>
+              <View
+                style={[
+                  styles.cutCircleSmall,
+                  {
+                    width: smallCircleSize,
+                    height: smallCircleSize,
+                    borderRadius: smallCircleSize / 2,
+                    top: smallTop,
+                  },
+                ]}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
+  screenBackground: {
+    flex: 1,
+  },
   screen: {
     flex: 1,
-    backgroundColor: '#efefef',
+    backgroundColor: 'transparent',
     paddingHorizontal: 20,
   },
   backButton: {
@@ -157,7 +204,7 @@ const styles = StyleSheet.create({
   },
   cutCircle: {
     position: 'absolute',
-    backgroundColor: '#efefef',
+    backgroundColor: '#eef3f8',
     left: 0,
     top: -110,
   },

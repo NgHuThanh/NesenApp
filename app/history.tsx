@@ -75,15 +75,15 @@ export default function History() {
   const getActivityIcon = (type: ActivityType) => {
     switch (type) {
       case 'brightness':
-        return { name: 'settings-outline' as const, color: '#d8c39a' };
+        return { name: 'settings-outline' as const, color: '#e5e7eb' };
       case 'connect':
-        return { name: 'checkmark-outline' as const, color: '#d8c39a' };
+        return { name: 'checkmark-outline' as const, color: '#e5e7eb' };
       case 'power':
-        return { name: 'power-outline' as const, color: '#d8c39a' };
+        return { name: 'power-outline' as const, color: '#e5e7eb' };
       case 'delete':
-        return { name: 'trash-outline' as const, color: '#d8c39a' };
+        return { name: 'trash-outline' as const, color: '#e5e7eb' };
       default:
-        return { name: 'ellipse-outline' as const, color: '#d8c39a' };
+        return { name: 'ellipse-outline' as const, color: '#e5e7eb' };
     }
   };
 
@@ -92,7 +92,7 @@ export default function History() {
       <View style={[styles.header, { marginTop: screenHeight * 0.05 }]}>
         <Text style={styles.title}>Lịch sử</Text>
         <TouchableOpacity style={styles.calendarBtn}>
-          <Ionicons name="calendar-outline" size={24} color="#d5e2f1" />
+          <Ionicons name="calendar-outline" size={24} color="#e5e7eb" />
         </TouchableOpacity>
       </View>
 
@@ -156,7 +156,7 @@ export default function History() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0b1720' },
+  safe: { flex: 1, backgroundColor: 'transparent' },
   header: {
     flexDirection: 'row',
     alignItems: 'center',

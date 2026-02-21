@@ -1,3 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -23,30 +25,40 @@ export default function Home() {
           <View style={styles.headerTopRow}>
             <Text style={styles.logo}>nesen</Text>
             <TouchableOpacity style={styles.notifBtn}>
-              <Text style={styles.notifIcon}>🔔</Text>
+              <Ionicons name="notifications-outline" size={20} color="#f3f4f6" style={styles.notifIcon} />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.greetingCard}>
+          <LinearGradient
+            colors={['#254b5d', '#213041', '#254b5d']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.greetingCard}
+          >
             <View>
             <Text style={styles.greeting}>Chào buổi sáng,</Text>
             <Text style={styles.userName}>Alex Nguyen</Text>
             </View>
             <View style={styles.weather}>
-              <Text style={styles.weatherIcon}>☁️</Text>
+              <Ionicons name="cloud-outline" size={30} color="#e5e7eb" style={styles.weatherIcon} />
               <View>
                 <Text style={styles.weatherTemp}>26°C | °F</Text>
                 <Text style={styles.weatherDesc}>Nhiều mây</Text>
               </View>
             </View>
-          </View>
+          </LinearGradient>
         </View>
 
         {hasDevices ? (
           <>
             {/* Sleep Quality Stats */}
             <View style={styles.statsContainer}>
-              <View style={styles.sleepCard}>
+              <LinearGradient
+                colors={['#254b5d', '#213041', '#254b5d']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.sleepCard}
+              >
                 <View style={styles.sleepLeft}>
                   <Text style={styles.statLabel} numberOfLines={1}>Chất lượng giấc ngủ</Text>
                   <View style={styles.scoreCircle}>
@@ -68,12 +80,19 @@ export default function Home() {
                     </View>
                   </View>
 
-                  <View style={styles.deepSleepPill}>
-                    <Text style={styles.statMiniLabel} numberOfLines={1}>Giấc ngủ sâu</Text>
-                    <Text style={styles.deepSleepValue} numberOfLines={1}>05:30:40</Text>
+                  <View style={styles.deepSleepWrap}>
+                    <LinearGradient
+                      colors={['#172332', '#1b2c38', '#22313f']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.deepSleepPill}
+                    >
+                      <Text style={styles.statMiniLabel} numberOfLines={1}>Giấc ngủ sâu</Text>
+                      <Text style={styles.deepSleepValue} numberOfLines={1}>05:30:40</Text>
+                    </LinearGradient>
                   </View>
                 </View>
-              </View>
+              </LinearGradient>
             </View>
 
             {/* Connected Devices */}
@@ -99,11 +118,20 @@ export default function Home() {
                     <View style={styles.deviceTopRow}>
                       <View style={styles.deviceInfoRow}>
                         <View style={styles.deviceIcon}>
-                          <Text style={styles.deviceEmoji}>
-                            {device.name.includes('Đèn') ? '💡' : 
-                             device.name.includes('Đồng hồ') ? '⏰' :
-                             device.name.includes('Công tắc') ? '🔌' : '📡'}
-                          </Text>
+                          <Ionicons
+                            name={
+                              device.name.includes('Đèn')
+                                ? 'bulb-outline'
+                                : device.name.includes('Đồng hồ')
+                                  ? 'alarm-outline'
+                                  : device.name.includes('Công tắc')
+                                    ? 'flash-outline'
+                                    : 'radio-outline'
+                            }
+                            size={20}
+                            color="#e3cda6"
+                            style={styles.deviceEmoji}
+                          />
                         </View>
                         <View style={styles.deviceInfoText}>
                           <Text style={styles.deviceName}>{device.name}</Text>
@@ -111,13 +139,18 @@ export default function Home() {
                         </View>
                       </View>
                       <View style={styles.deviceChevronCircle}>
-                        <Text style={styles.deviceChevron}>›</Text>
+                        <Ionicons name="chevron-forward" size={16} color="#e3cda6" style={styles.deviceChevron} />
                       </View>
                     </View>
 
                     <View style={styles.deviceStatus}>
                       <View style={[styles.statusIconCircle, device.isConnected ? styles.statusIconCircleActive : styles.statusIconCircleInactive]}>
-                        <Text style={styles.statusIconText}>{device.isConnected ? '✓' : '×'}</Text>
+                        <Ionicons
+                          name={device.isConnected ? 'checkmark' : 'close'}
+                          size={9}
+                          color={device.isConnected ? '#22c55e' : '#e3cda6'}
+                          style={styles.statusIconText}
+                        />
                       </View>
                       <Text style={[styles.statusText, device.isConnected && styles.statusTextActive]}>
                         {device.isConnected ? 'Đang kết nối' : 'Không kết nối'}
@@ -132,7 +165,7 @@ export default function Home() {
           /* Empty State */
           <View style={styles.emptyState}>
             <View style={styles.emptyIcon}>
-              <Text style={styles.emptyIconText}>🏠</Text>
+              <Ionicons name="home-outline" size={48} color="#e3cda6" style={styles.emptyIconText} />
             </View>
             <Text style={styles.emptyText}>Không tìm thấy thiết bị nào.</Text>
             <TouchableOpacity 
@@ -149,32 +182,53 @@ export default function Home() {
           <Text style={styles.aboutSectionTitle}>VỀ CHÚNG TÔI</Text>
 
           <TouchableOpacity style={styles.aboutCard}>
-            <View style={styles.aboutContent}>
-              <Text style={styles.aboutTitle}>Giới thiệu</Text>
-              <Text style={styles.aboutDesc}>Khám phá hành trình và sứ mệnh của Nesen</Text>
-            </View>
-            <View style={styles.aboutArt}>
-              <Text style={styles.aboutMoon}>🌙</Text>
-              <Text style={styles.aboutLamp}>💡</Text>
-              <Text style={styles.aboutSofa}>🛋️</Text>
-            </View>
+            <LinearGradient
+              colors={['#254b5d', '#213041', '#254b5d']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.aboutCardGradient}
+            >
+              <View style={styles.aboutContent}>
+                <Text style={styles.aboutTitle}>Giới thiệu</Text>
+                <Text style={styles.aboutDesc}>Khám phá hành trình và sứ mệnh của Nesen</Text>
+              </View>
+              <View style={styles.aboutArt}>
+                <Ionicons name="moon-outline" size={12} color="#e3cda6" style={styles.aboutMoon} />
+                <Ionicons name="bulb-outline" size={24} color="#e3cda6" style={styles.aboutLamp} />
+                <Ionicons name="bed-outline" size={34} color="#e3cda6" style={styles.aboutSofa} />
+              </View>
+            </LinearGradient>
           </TouchableOpacity>
 
           <View style={styles.aboutRow}>
             <TouchableOpacity style={styles.aboutSmallCard}>
-              <View style={styles.aboutSmallTop}>
-                <Text style={styles.aboutSmallIcon}>⌂</Text>
-                <Text style={styles.aboutSmallTitle}>Sản phẩm</Text>
-              </View>
-              <Text style={styles.aboutSmallDesc}>Xem các sản phẩm hỗ trợ</Text>
+              <LinearGradient
+                colors={['#254b5d', '#213041', '#254b5d']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.aboutSmallCardGradient}
+              >
+                <View style={styles.aboutSmallTop}>
+                  <Ionicons name="home-outline" size={14} color="#e3cda6" style={styles.aboutSmallIcon} />
+                  <Text style={styles.aboutSmallTitle}>Sản phẩm</Text>
+                </View>
+                <Text style={styles.aboutSmallDesc}>Xem các sản phẩm hỗ trợ</Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.aboutSmallCard}>
-              <View style={styles.aboutSmallTop}>
-                <Text style={styles.aboutSmallIcon}>◷</Text>
-                <Text style={styles.aboutSmallTitle}>Tin tức</Text>
-              </View>
-              <Text style={styles.aboutSmallDesc}>Tin tức và chia sẻ hữu ích mỗi ngày</Text>
+              <LinearGradient
+                colors={['#254b5d', '#213041', '#254b5d']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.aboutSmallCardGradient}
+              >
+                <View style={styles.aboutSmallTop}>
+                  <Ionicons name="newspaper-outline" size={14} color="#e3cda6" style={styles.aboutSmallIcon} />
+                  <Text style={styles.aboutSmallTitle}>Tin tức</Text>
+                </View>
+                <Text style={styles.aboutSmallDesc}>Tin tức và chia sẻ hữu ích mỗi ngày</Text>
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </View>
@@ -186,7 +240,7 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0f1e2e' },
+  safe: { flex: 1, backgroundColor: 'transparent' },
   container: { flex: 1 },
   containerContent: { paddingBottom: 120 },
   header: {
@@ -204,6 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 15,
     paddingVertical: 10,
+    marginHorizontal: -4,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -271,20 +326,23 @@ const styles = StyleSheet.create({
   sleepTopRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 52,
     marginBottom: 6,
   },
   sleepMetricBlock: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    minHeight: 52,
   },
   innerDivider: {
     width: 1,
-    backgroundColor: 'rgba(148, 163, 184, 0.2)',
+    height: 44,
+    alignSelf: 'center',
+    backgroundColor: 'rgba(148, 163, 184, 0.35)',
     marginHorizontal: 6,
   },
   deepSleepPill: {
-    backgroundColor: 'rgba(80, 153, 181, 0.35)',
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -293,10 +351,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: 28,
   },
+  deepSleepWrap: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   deepSleepValue: {
     color: '#dbeafe',
     fontSize: 13,
     fontWeight: '700',
+    fontVariant: ['tabular-nums'],
   },
   statLabel: {
     color: '#9ca3af',
@@ -332,6 +395,7 @@ const styles = StyleSheet.create({
     color: '#dbeafe',
     fontSize: 13,
     fontWeight: '700',
+    fontVariant: ['tabular-nums'],
   },
   emptyState: {
     backgroundColor: 'rgba(30, 58, 80, 0.4)',
@@ -449,13 +513,12 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   statusIconCircleActive: {
-    backgroundColor: '#1ec98d',
+    backgroundColor: '#bbf7d0',
   },
   statusIconCircleInactive: {
     backgroundColor: '#637186',
   },
   statusIconText: {
-    color: '#eaf6ff',
     fontSize: 9,
     fontWeight: '700',
   },
@@ -465,7 +528,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   statusTextActive: {
-    color: '#33d39b',
+    color: '#22c55e',
   },
   deviceChevronCircle: {
     width: 24,
@@ -476,21 +539,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   deviceChevron: {
-    color: '#9fb1c7',
+    color: '#e3cda6',
     fontSize: 18,
     lineHeight: 20,
     marginLeft: 1,
   },
   aboutCard: {
-    backgroundColor: 'rgba(58, 84, 120, 0.6)',
     borderRadius: 14,
+    overflow: 'hidden',
+    minHeight: 98,
+    marginBottom: 12,
+  },
+  aboutCardGradient: {
     paddingVertical: 14,
     paddingHorizontal: 14,
-    minHeight: 98,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    minHeight: 98,
   },
   aboutSectionTitle: {
     color: '#7593ac',
@@ -544,8 +610,10 @@ const styles = StyleSheet.create({
   },
   aboutSmallCard: {
     width: '48%',
-    backgroundColor: 'rgba(58, 84, 120, 0.6)',
     borderRadius: 12,
+    overflow: 'hidden',
+  },
+  aboutSmallCardGradient: {
     paddingHorizontal: 12,
     paddingVertical: 14,
   },
@@ -556,7 +624,7 @@ const styles = StyleSheet.create({
   },
   aboutSmallIcon: {
     fontSize: 14,
-    color: '#d8c39f',
+    color: '#e3cda6',
     marginRight: 8,
   },
   aboutSmallTitle: {

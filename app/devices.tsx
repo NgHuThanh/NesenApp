@@ -114,7 +114,7 @@ export default function Devices() {
                 style={styles.menuBtn}
                 onPress={() => handleMenuOpen(device)}
               >
-                <Text style={styles.menuIcon}>⋮</Text>
+                <Ionicons name="ellipsis-vertical" size={18} color="#cbd5e1" style={styles.menuIcon} />
               </TouchableOpacity>
             </View>
 
@@ -122,7 +122,7 @@ export default function Devices() {
 
             <View style={styles.deviceContent}>
               <View style={styles.deviceIcon}>
-                <Text style={styles.deviceEmoji}>💡</Text>
+                <Ionicons name="bulb-outline" size={30} color="#f3f4f6" style={styles.deviceEmoji} />
               </View>
 
               <View style={styles.deviceInfo}>
@@ -159,7 +159,7 @@ export default function Devices() {
             
             <TouchableOpacity style={styles.menuItem} onPress={handleEdit}>
               <View style={styles.menuItemLeft}>
-                <Ionicons name="create-outline" size={30} color="#e4eefb" />
+                <Ionicons name="create-outline" size={30} color="#e5e7eb" />
                 <Text style={styles.menuItemText}>Chỉnh sửa thiết bị</Text>
               </View>
             </TouchableOpacity>
@@ -172,7 +172,7 @@ export default function Devices() {
               }}
             >
               <View style={styles.menuItemLeft}>
-                <Ionicons name="trash-outline" size={30} color="#ff6558" />
+                <Ionicons name="trash-outline" size={30} color="#e5e7eb" />
                 <Text style={[styles.menuItemText, styles.menuItemDanger]}>Xóa thiết bị</Text>
               </View>
             </TouchableOpacity>
@@ -217,7 +217,7 @@ export default function Devices() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0b1720' },
+  safe: { flex: 1, backgroundColor: 'transparent' },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   statusDotActive: { backgroundColor: '#10b981' },
   statusText: { color: '#9ca3af', fontSize: 13, fontWeight: '500' },
-  statusTextActive: { color: '#34d399' },
+  statusTextActive: { color: '#e5e7eb' },
   menuBtn: { padding: 2 },
   menuIcon: { color: '#9ca3af', fontSize: 20, lineHeight: 20 },
   cardDivider: {
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuItemText: { color: '#e5eefb', fontSize: 17, marginLeft: 14 },
-  menuItemDanger: { color: '#ff6558' },
+  menuItemDanger: { color: '#e5e7eb' },
   deleteModal: {
     backgroundColor: '#1e293b',
     borderRadius: 16,

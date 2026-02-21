@@ -32,8 +32,8 @@ export default function BottomNavigator() {
 
   const renderTab = (tab: { key: string; label: string; icon: string; route?: string }) => {
     const active = isActive(tab.key);
-    const iconColor = active ? '#f0ddb8' : '#79879f';
-    const labelColor = active ? '#f0ddb8' : '#79879f';
+    const iconColor = active ? '#e3cda6' : '#9ca3af';
+    const labelColor = active ? '#e3cda6' : '#9ca3af';
 
     return (
       <TouchableOpacity
@@ -83,7 +83,7 @@ export default function BottomNavigator() {
             <Ionicons
               name="home"
               size={28}
-              color={isActive('home') ? '#223350' : '#314563'}
+              color="#000000"
             />
           </View>
         </View>

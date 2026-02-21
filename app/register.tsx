@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -56,7 +57,7 @@ export default function Register() {
             {/* Username */}
             <View style={styles.inputGroup}>
               <View style={styles.inputContainer}>
-                <Text style={styles.icon}>👤</Text>
+                <Ionicons name="person-outline" size={18} color="#ffffff" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Tên người dùng"
@@ -70,7 +71,7 @@ export default function Register() {
             {/* Email */}
             <View style={styles.inputGroup}>
               <View style={styles.inputContainer}>
-                <Text style={styles.icon}>📧</Text>
+                <Ionicons name="mail-outline" size={18} color="#ffffff" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Email"
@@ -85,7 +86,7 @@ export default function Register() {
             {/* Password */}
             <View style={styles.inputGroup}>
               <View style={styles.inputContainer}>
-                <Text style={styles.icon}>🔒</Text>
+                <Ionicons name="lock-closed-outline" size={18} color="#ffffff" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Mật khẩu"
@@ -98,7 +99,11 @@ export default function Register() {
                   onPress={() => setShowPassword(!showPassword)}
                   style={styles.eyeIcon}
                 >
-                  <Text>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                  <Ionicons
+                    name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                    size={18}
+                    color="#ffffff"
+                  />
                 </TouchableOpacity>
               </View>
             </View>
@@ -106,7 +111,7 @@ export default function Register() {
             {/* Confirm Password */}
             <View style={styles.inputGroup}>
               <View style={styles.inputContainer}>
-                <Text style={styles.icon}>🔒</Text>
+                <Ionicons name="lock-closed-outline" size={18} color="#ffffff" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Nhập lại mật khẩu"
@@ -119,7 +124,11 @@ export default function Register() {
                   onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                   style={styles.eyeIcon}
                 >
-                  <Text>{showConfirmPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                  <Ionicons
+                    name={showConfirmPassword ? 'eye-outline' : 'eye-off-outline'}
+                    size={18}
+                    color="#ffffff"
+                  />
                 </TouchableOpacity>
               </View>
             </View>
@@ -204,6 +213,7 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -232,6 +242,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 16,
+    marginHorizontal: '10%',
   },
   checkbox: {
     width: 20,
@@ -253,8 +264,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 8,
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   ctaDisabled: { opacity: 0.5 },
   ctaText: { color: '#1a2332', fontWeight: '700' },
-  link: { color: '#e6d5be', textAlign: 'center', marginTop: 12 },
+  link: { color: '#e6d5be', textAlign: 'center', marginTop: 12, marginHorizontal: '10%' },
 });

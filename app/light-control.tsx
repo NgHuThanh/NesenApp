@@ -30,6 +30,7 @@ const ARC_LEFT_OFFSET = -30;
 const ARC_TOUCH_PADDING = 28;
 const SUN_ICON_SIZE = 22;
 const SUN_ICON_LEFT_SHIFT = 3;
+const SUN_ICON_EXTRA_LEFT_SHIFT = 13;
 
 const normalizeDeg = (deg: number) => ((deg % 360) + 360) % 360;
 
@@ -97,10 +98,30 @@ export default function LightControl() {
   const knobY = ARC_SIZE / 2 + radius * Math.sin(knobAngle);
   const startAngle = (ARC_START_DEG * Math.PI) / 180;
   const endAngle = ((ARC_START_DEG + ARC_SWEEP_DEG) * Math.PI) / 180;
-  const sunStartX = ARC_SIZE / 2 + radius * Math.cos(startAngle) - SUN_ICON_SIZE / 2 - SUN_ICON_LEFT_SHIFT + ARC_LEFT_OFFSET;
-  const sunStartY = ARC_SIZE / 2 + radius * Math.sin(startAngle) - SUN_ICON_SIZE / 2 + ARC_TOP_OFFSET;
-  const sunEndX = ARC_SIZE / 2 + radius * Math.cos(endAngle) - SUN_ICON_SIZE / 2 - SUN_ICON_LEFT_SHIFT + ARC_LEFT_OFFSET;
-  const sunEndY = ARC_SIZE / 2 + radius * Math.sin(endAngle) - SUN_ICON_SIZE / 2 + ARC_TOP_OFFSET;
+  const sunStartX =
+    ARC_SIZE / 2 +
+    radius * Math.cos(startAngle) -
+    SUN_ICON_SIZE / 2 -
+    SUN_ICON_LEFT_SHIFT -
+    SUN_ICON_EXTRA_LEFT_SHIFT +
+    ARC_LEFT_OFFSET;
+  const sunStartY =
+    ARC_SIZE / 2 +
+    radius * Math.sin(startAngle) -
+    SUN_ICON_SIZE / 2 +
+    ARC_TOP_OFFSET;
+  const sunEndX =
+    ARC_SIZE / 2 +
+    radius * Math.cos(endAngle) -
+    SUN_ICON_SIZE / 2 -
+    SUN_ICON_LEFT_SHIFT -
+    SUN_ICON_EXTRA_LEFT_SHIFT +
+    ARC_LEFT_OFFSET;
+  const sunEndY =
+    ARC_SIZE / 2 +
+    radius * Math.sin(endAngle) -
+    SUN_ICON_SIZE / 2 +
+    ARC_TOP_OFFSET;
 
   const auraCenterX = 65;
   const auraCenterY = 76;
@@ -120,7 +141,7 @@ export default function LightControl() {
 
         <View style={styles.headerRow}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={34} color="#d8e5f3" />
+            <Ionicons name="chevron-back" size={34} color="#f3f4f6" />
           </TouchableOpacity>
           <Text style={styles.title}>Đèn ngủ</Text>
           <TouchableOpacity>
@@ -160,13 +181,13 @@ export default function LightControl() {
               <MaterialCommunityIcons
                 name="white-balance-sunny"
                 size={SUN_ICON_SIZE}
-                color="#e4d2ae"
+                color="#e3cda6"
                 style={[styles.sunIcon, { left: sunStartX, top: sunStartY }]}
               />
               <MaterialCommunityIcons
                 name="white-balance-sunny"
                 size={SUN_ICON_SIZE}
-                color="rgba(128, 150, 172, 0.5)"
+                color="rgba(226, 232, 240, 0.5)"
                 style={[styles.sunIcon, { left: sunEndX, top: sunEndY }]}
               />
 
@@ -218,19 +239,19 @@ export default function LightControl() {
             <View style={styles.quickPanel}>
               <View style={styles.quickItem}>
                 <View style={styles.quickIconWrap}>
-                  <MaterialCommunityIcons name="timer-outline" size={24} color="#8ca2b9" />
+                  <MaterialCommunityIcons name="timer-outline" size={24} color="#e5e7eb" />
                 </View>
                 <Text style={styles.quickText}>Hẹn giờ</Text>
               </View>
               <View style={styles.quickItem}>
                 <View style={styles.quickIconWrap}>
-                  <MaterialCommunityIcons name="bed-queen-outline" size={24} color="#8ca2b9" />
+                  <MaterialCommunityIcons name="bed-queen-outline" size={24} color="#e5e7eb" />
                 </View>
                 <Text style={styles.quickText}>Ngủ</Text>
               </View>
               <View style={styles.quickItem}>
                 <View style={styles.quickIconWrap}>
-                  <MaterialCommunityIcons name="meditation" size={24} color="#8ca2b9" />
+                  <MaterialCommunityIcons name="meditation" size={24} color="#e5e7eb" />
                 </View>
                 <Text style={styles.quickText}>Thư giãn</Text>
               </View>
@@ -249,7 +270,7 @@ export default function LightControl() {
             <View key={item.label} style={[styles.envRow, index < ENV_ITEMS.length - 1 && styles.envRowBorder]}>
               <View style={styles.envLeft}>
                 <View style={styles.envIconBox}>
-                  <MaterialCommunityIcons name={item.icon as any} size={22} color="#e7c98d" />
+                  <MaterialCommunityIcons name={item.icon as any} size={22} color="#e3cda6" />
                 </View>
                 <Text style={styles.envLabel}>{item.label}</Text>
               </View>

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 export default function Account() {
@@ -37,9 +37,9 @@ export default function Account() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>CÀI ĐẶT GIẤC NGỦ</Text>
           <View style={styles.menuGroup}>
-            <MenuItem icon="🔔" label="Mục tiêu ngủ" onPress={() => {}} />
-            <MenuItem icon="⏰" label="Thời gian thức dậy" onPress={() => {}} />
-            <MenuItem icon="🌙" label="Thời gian đi ngủ" onPress={() => {}} />
+            <MenuItem icon="notifications-outline" label="Mục tiêu ngủ" onPress={() => {}} />
+            <MenuItem icon="alarm-outline" label="Thời gian thức dậy" onPress={() => {}} />
+            <MenuItem icon="moon-outline" label="Thời gian đi ngủ" onPress={() => {}} />
           </View>
         </View>
 
@@ -47,16 +47,16 @@ export default function Account() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>THÔNG BÁO</Text>
           <View style={styles.menuGroup}>
-            <MenuItem icon="💡" label="Lịch đèn" onPress={() => {}} />
-            <MenuItem icon="⚠️" label="Cảnh báo cảm biến" onPress={() => {}} />
-            <MenuItem icon="📝" label="Nhắc nhở ngủ" onPress={() => {}} />
-            <MenuItem icon="📋" label="Thức dậy" onPress={() => {}} />
+            <MenuItem icon="bulb-outline" label="Lịch đèn" onPress={() => {}} />
+            <MenuItem icon="warning-outline" label="Cảnh báo cảm biến" onPress={() => {}} />
+            <MenuItem icon="document-text-outline" label="Nhắc nhở ngủ" onPress={() => {}} />
+            <MenuItem icon="list-outline" label="Thức dậy" onPress={() => {}} />
           </View>
         </View>
 
         {/* Logout Button */}
         <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-          <Ionicons name="log-out-outline" size={24} color="#ff6558" style={styles.logoutIcon} />
+          <Ionicons name="log-out-outline" size={24} color="#ef4444" style={styles.logoutIcon} />
           <Text style={styles.logoutText}>Đăng xuất</Text>
         </TouchableOpacity>
 
@@ -67,7 +67,7 @@ export default function Account() {
 }
 
 interface MenuItemProps {
-  icon: string;
+  icon: ComponentProps<typeof Ionicons>['name'];
   label: string;
   onPress: () => void;
 }
@@ -76,16 +76,16 @@ function MenuItem({ icon, label, onPress }: MenuItemProps) {
   return (
     <TouchableOpacity style={styles.menuItem} onPress={onPress}>
       <View style={styles.menuItemLeft}>
-        <Text style={styles.menuIcon}>{icon}</Text>
+        <Ionicons name={icon} size={16} color="#e5e7eb" style={styles.menuIcon} />
         <Text style={styles.menuLabel}>{label}</Text>
       </View>
-      <Text style={styles.menuChevron}>›</Text>
+      <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.menuChevron} />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0b1720' },
+  safe: { flex: 1, backgroundColor: 'transparent' },
   container: { flex: 1 },
   containerContent: { paddingBottom: 96, paddingTop: 8 },
   profileHeader: {
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     backgroundColor: 'rgba(255,255,255,0.05)',
     marginHorizontal: 12,
-    borderRadius: 30,
+    borderRadius: 14,
     marginBottom: 20,
   },
   avatar: {

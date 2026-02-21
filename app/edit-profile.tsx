@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
@@ -14,7 +15,7 @@ export default function EditProfile() {
     <SafeAreaView style={styles.safe}>
       <View style={[styles.header, { paddingTop: screenHeight * 0.05 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Text style={styles.backText}>‹</Text>
+          <Ionicons name="chevron-back" size={30} color="#f3f4f6" style={styles.backText} />
         </TouchableOpacity>
         <Text style={styles.title}>Chỉnh sửa hồ sơ</Text>
         <View style={{ width: 40 }} />
@@ -42,7 +43,7 @@ export default function EditProfile() {
               <Text style={styles.label}>Tên người dùng</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.value}>{username}</Text>
-                <Text style={styles.chevron}>›</Text>
+                <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.chevron} />
               </View>
             </TouchableOpacity>
 
@@ -51,7 +52,7 @@ export default function EditProfile() {
               <Text style={styles.label}>Thay đổi mật khẩu</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.valueMuted}>Đổi mật khẩu</Text>
-                <Text style={styles.chevron}>›</Text>
+                <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.chevron} />
               </View>
             </TouchableOpacity>
 
@@ -60,7 +61,7 @@ export default function EditProfile() {
               <Text style={styles.label}>Múi giờ</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.value}>{timezone}</Text>
-                <Text style={styles.chevron}>›</Text>
+                <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.chevron} />
               </View>
             </TouchableOpacity>
           </View>
@@ -76,7 +77,7 @@ export default function EditProfile() {
               <Text style={styles.label}>Email</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.valueMuted}>{email}</Text>
-                <Text style={styles.chevron}>›</Text>
+                <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.chevron} />
               </View>
             </TouchableOpacity>
 
@@ -85,7 +86,7 @@ export default function EditProfile() {
               <Text style={styles.label}>Điện thoại</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.value}>{phone}</Text>
-                <Text style={styles.chevron}>›</Text>
+                <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.chevron} />
               </View>
             </TouchableOpacity>
 
@@ -94,7 +95,7 @@ export default function EditProfile() {
               <Text style={styles.label}>Facebook</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.valueMuted}>Liên kết</Text>
-                <Text style={styles.chevron}>›</Text>
+                <Ionicons name="chevron-forward" size={18} color="#9ca3af" style={styles.chevron} />
               </View>
             </TouchableOpacity>
           </View>
@@ -107,7 +108,7 @@ export default function EditProfile() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0b1720' },
+  safe: { flex: 1, backgroundColor: 'transparent' },
   header: {
     flexDirection: 'row',
     alignItems: 'center',

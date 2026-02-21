@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -26,6 +27,10 @@ export default function LoginScreen() {
 
   const handleForgotPassword = () => {
     console.log('Quên mật khẩu');
+  };
+
+  const handleGoToRegister = () => {
+    router.push('./register');
   };
 
   const handleGoBack = () => {
@@ -59,7 +64,7 @@ export default function LoginScreen() {
             {/* Email/Phone Input */}
             <View style={styles.inputGroup}>
               <View style={styles.inputContainer}>
-                <Text style={styles.icon}>👤</Text>
+                <Ionicons name="person-outline" size={18} color="#ffffff" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Email/SDT"
@@ -75,7 +80,7 @@ export default function LoginScreen() {
             {/* Password Input */}
             <View style={styles.inputGroup}>
               <View style={styles.inputContainer}>
-                <Text style={styles.icon}>🔒</Text>
+                <Ionicons name="lock-closed-outline" size={18} color="#ffffff" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Mật khẩu"
@@ -89,14 +94,18 @@ export default function LoginScreen() {
                   onPress={() => setShowPassword(!showPassword)}
                   style={styles.eyeIcon}
                 >
-                  <Text>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                  <Ionicons
+                    name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                    size={18}
+                    color="#ffffff"
+                  />
                 </TouchableOpacity>
               </View>
             </View>
 
             {/* Forgot Password & Help */}
             <View style={styles.helpRow}>
-              <TouchableOpacity onPress={handleForgotPassword}>
+              <TouchableOpacity onPress={handleGoToRegister}>
                 <Text style={styles.helpText}>Đăng ký</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleForgotPassword}>
@@ -119,10 +128,10 @@ export default function LoginScreen() {
             {/* Social Login */}
             <View style={styles.socialSection}>
               <TouchableOpacity style={styles.socialButton}>
-                <Text style={styles.socialIcon}>f</Text>
+                <Ionicons name="logo-facebook" size={20} color="#ffffff" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.socialButton}>
-                <Text style={styles.socialIcon}>G</Text>
+                <Ionicons name="logo-google" size={20} color="#ffffff" />
               </TouchableOpacity>
             </View>
 
@@ -199,6 +208,7 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -232,6 +242,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   helpText: {
     fontSize: 13,
@@ -244,6 +255,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   loginButtonText: {
     fontSize: 16,
@@ -254,6 +266,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   line: {
     flex: 1,
@@ -270,6 +283,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 16,
     marginBottom: 24,
+    marginHorizontal: '10%',
   },
   socialButton: {
     width: 48,
