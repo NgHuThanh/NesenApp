@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Modal, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
@@ -157,8 +158,10 @@ export default function Devices() {
             <View style={styles.sheetHandle} />
             
             <TouchableOpacity style={styles.menuItem} onPress={handleEdit}>
-              <Text style={styles.menuItemIcon}>✏️</Text>
-              <Text style={styles.menuItemText}>Chỉnh sửa thiết bị</Text>
+              <View style={styles.menuItemLeft}>
+                <Ionicons name="create-outline" size={30} color="#e4eefb" />
+                <Text style={styles.menuItemText}>Chỉnh sửa thiết bị</Text>
+              </View>
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -168,8 +171,10 @@ export default function Devices() {
                 setShowDeleteModal(true);
               }}
             >
-              <Text style={styles.menuItemIcon}>🗑️</Text>
-              <Text style={[styles.menuItemText, styles.menuItemDanger]}>Xóa thiết bị</Text>
+              <View style={styles.menuItemLeft}>
+                <Ionicons name="trash-outline" size={30} color="#ff6558" />
+                <Text style={[styles.menuItemText, styles.menuItemDanger]}>Xóa thiết bị</Text>
+              </View>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -316,28 +321,31 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   bottomSheet: {
-    backgroundColor: '#1e293b',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    paddingBottom: 40,
+    backgroundColor: '#22324b',
+    borderRadius: 34,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    paddingHorizontal: 22,
+    paddingTop: 14,
+    paddingBottom: 30,
   },
   sheetHandle: {
-    width: 40,
-    height: 4,
-    backgroundColor: '#4b5563',
+    width: 86,
+    height: 6,
+    backgroundColor: '#92a2b3',
     borderRadius: 2,
     alignSelf: 'center',
-    marginBottom: 20,
+    marginBottom: 22,
   },
   menuItem: {
+    paddingVertical: 14,
+  },
+  menuItemLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 16,
   },
-  menuItemIcon: { fontSize: 20, marginRight: 12 },
-  menuItemText: { color: '#e5e7eb', fontSize: 16 },
-  menuItemDanger: { color: '#ef4444' },
+  menuItemText: { color: '#e5eefb', fontSize: 17, marginLeft: 14 },
+  menuItemDanger: { color: '#ff6558' },
   deleteModal: {
     backgroundColor: '#1e293b',
     borderRadius: 16,
