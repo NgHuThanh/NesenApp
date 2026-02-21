@@ -1,9 +1,11 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 export default function Account() {
   const router = useRouter();
+  const { height: screenHeight } = useWindowDimensions();
 
   const handleLogout = () => {
     // Placeholder: clear session and navigate to login
@@ -13,7 +15,10 @@ export default function Account() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.containerContent}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={[styles.containerContent, { paddingTop: screenHeight * 0.08 }]}
+      >
         {/* User Profile Header */}
         <View style={styles.profileHeader}>
           <View style={styles.avatar}>
@@ -51,7 +56,7 @@ export default function Account() {
 
         {/* Logout Button */}
         <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-          <Text style={styles.logoutIcon}>🚪</Text>
+          <Ionicons name="log-out-outline" size={24} color="#ff6558" style={styles.logoutIcon} />
           <Text style={styles.logoutText}>Đăng xuất</Text>
         </TouchableOpacity>
 
@@ -82,27 +87,29 @@ function MenuItem({ icon, label, onPress }: MenuItemProps) {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#0b1720' },
   container: { flex: 1 },
-  containerContent: { paddingBottom: 120 },
+  containerContent: { paddingBottom: 96, paddingTop: 8 },
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 32,
+    paddingHorizontal: 30,
+    paddingVertical: 14,
     backgroundColor: 'rgba(255,255,255,0.05)',
-    marginBottom: 24,
+    marginHorizontal: 12,
+    borderRadius: 30,
+    marginBottom: 20,
   },
   avatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: 58,
+    height: 58,
+    borderRadius: 29,
     backgroundColor: '#d4a574',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   avatarText: {
     color: '#fff',
-    fontSize: 28,
+    fontSize: 23,
     fontWeight: '600',
   },
   userInfo: {
@@ -110,42 +117,42 @@ const styles = StyleSheet.create({
   },
   userName: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   userEmail: {
     color: '#9ca3af',
-    fontSize: 14,
-    marginBottom: 8,
+    fontSize: 13,
+    marginBottom: 5,
   },
   editLink: {
     color: '#e5e7eb',
-    fontSize: 14,
+    fontSize: 13,
   },
   section: {
-    marginBottom: 24,
+    marginBottom: 18,
   },
   sectionTitle: {
     color: '#60a5fa',
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
-    paddingHorizontal: 24,
-    marginBottom: 12,
+    paddingHorizontal: 14,
+    marginBottom: 8,
     letterSpacing: 0.5,
   },
   menuGroup: {
     backgroundColor: 'rgba(255,255,255,0.05)',
-    marginHorizontal: 16,
-    borderRadius: 12,
+    marginHorizontal: 12,
+    borderRadius: 10,
     overflow: 'hidden',
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255,255,255,0.05)',
   },
@@ -155,35 +162,35 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuIcon: {
-    fontSize: 20,
-    marginRight: 12,
+    fontSize: 14,
+    marginRight: 8,
   },
   menuLabel: {
     color: '#e5e7eb',
-    fontSize: 16,
+    fontSize: 14,
   },
   menuChevron: {
     color: '#9ca3af',
-    fontSize: 24,
+    fontSize: 20,
   },
   logoutBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 24,
-    paddingVertical: 16,
-    marginTop: 16,
+    justifyContent: 'flex-start',
+    marginHorizontal: 12,
+    paddingVertical: 13,
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    marginTop: 12,
   },
-  logoutIcon: {
-    fontSize: 20,
-    marginRight: 8,
-  },
+  logoutIcon: { marginRight: 8 },
   logoutText: {
     color: '#ef4444',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
   },
   bottomSpacer: {
-    height: 40,
+    height: 28,
   },
 });

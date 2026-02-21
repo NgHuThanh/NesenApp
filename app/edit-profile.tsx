@@ -1,17 +1,18 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 export default function EditProfile() {
   const router = useRouter();
-  const [username, setUsername] = useState('Linh Trần');
-  const [timezone, setTimezone] = useState('Việt Nam');
+  const { height: screenHeight } = useWindowDimensions();
+  const [username] = useState('Linh Trần');
+  const [timezone] = useState('Việt Nam');
   const [email] = useState('linhtran209@gmail.com');
   const [phone] = useState('0787644565');
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: screenHeight * 0.05 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Text style={styles.backText}>‹</Text>
         </TouchableOpacity>
@@ -19,7 +20,10 @@ export default function EditProfile() {
         <View style={{ width: 40 }} />
       </View>
 
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={[styles.containerContent, { paddingTop: screenHeight * 0.04 }]}
+      >
         {/* Account Information Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>THÔNG TIN TÀI KHOẢN</Text>
@@ -52,7 +56,7 @@ export default function EditProfile() {
             </TouchableOpacity>
 
             {/* Timezone Row */}
-            <TouchableOpacity style={styles.row}>
+            <TouchableOpacity style={[styles.row, styles.lastRow]}>
               <Text style={styles.label}>Múi giờ</Text>
               <View style={styles.valueContainer}>
                 <Text style={styles.value}>{timezone}</Text>
@@ -63,7 +67,7 @@ export default function EditProfile() {
         </View>
 
         {/* Linked Accounts Section */}
-        <View style={styles.section}>
+        <View style={[styles.section, styles.sectionSpacing]}>
           <Text style={styles.sectionTitle}>LIÊN KẾT</Text>
           
           <View style={styles.card}>
@@ -86,12 +90,13 @@ export default function EditProfile() {
             </TouchableOpacity>
 
             {/* Facebook Row */}
-            <View style={styles.row}>
+            <TouchableOpacity style={[styles.row, styles.lastRow]}>
               <Text style={styles.label}>Facebook</Text>
-              <TouchableOpacity style={styles.connectBtn}>
-                <Text style={styles.connectText}>Liên kết</Text>
-              </TouchableOpacity>
-            </View>
+              <View style={styles.valueContainer}>
+                <Text style={styles.valueMuted}>Liên kết</Text>
+                <Text style={styles.chevron}>›</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -108,28 +113,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
+    paddingTop: 8,
+    paddingBottom: 6,
   },
   backBtn: { width: 40, alignItems: 'flex-start' },
-  backText: { color: '#fff', fontSize: 32 },
-  title: { color: '#fff', fontSize: 18, fontWeight: '600' },
+  backText: { color: '#fff', fontSize: 30, lineHeight: 32 },
+  title: { color: '#e5e7eb', fontSize: 18, fontWeight: '600' },
   container: { flex: 1 },
+  containerContent: {
+    paddingBottom: 40,
+  },
   section: {
-    marginTop: 24,
+    marginTop: 0,
+  },
+  sectionSpacing: {
+    marginTop: 18,
   },
   sectionTitle: {
     color: '#60a5fa',
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
-    paddingHorizontal: 24,
-    marginBottom: 12,
+    paddingHorizontal: 14,
+    marginBottom: 10,
     letterSpacing: 0.5,
   },
   card: {
-    backgroundColor: 'rgba(30, 41, 59, 0.8)',
-    marginHorizontal: 16,
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    marginHorizontal: 12,
     borderRadius: 12,
     overflow: 'hidden',
   },
@@ -137,58 +147,50 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 16,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255,255,255,0.05)',
   },
+  lastRow: {
+    borderBottomWidth: 0,
+  },
   label: {
     color: '#e5e7eb',
-    fontSize: 16,
+    fontSize: 14,
   },
   valueContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   value: {
-    color: '#e5e7eb',
-    fontSize: 15,
+    color: '#9ca3af',
+    fontSize: 14,
     marginRight: 8,
   },
   valueMuted: {
     color: '#9ca3af',
-    fontSize: 15,
+    fontSize: 14,
     marginRight: 8,
   },
   chevron: {
     color: '#9ca3af',
-    fontSize: 24,
+    fontSize: 20,
   },
   avatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 58,
+    height: 58,
+    borderRadius: 29,
     backgroundColor: '#d4a574',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarText: {
     color: '#fff',
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  connectBtn: {
-    backgroundColor: '#d4a574',
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 8,
-  },
-  connectText: {
-    color: '#1f2937',
-    fontSize: 14,
+    fontSize: 23,
     fontWeight: '600',
   },
   bottomSpacer: {
-    height: 40,
+    height: 24,
   },
 });

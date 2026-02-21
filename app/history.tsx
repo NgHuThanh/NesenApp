@@ -1,6 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 type ActivityType = 'brightness' | 'connect' | 'power' | 'delete';
 
@@ -68,29 +69,30 @@ const FILTERS = ['Tất cả', 'Đèn ngủ', 'Cảm biến', 'Đồng hồ'];
 
 export default function History() {
   const router = useRouter();
+  const { height: screenHeight } = useWindowDimensions();
   const [activeFilter, setActiveFilter] = useState('Tất cả');
 
   const getActivityIcon = (type: ActivityType) => {
     switch (type) {
       case 'brightness':
-        return '⚙️';
+        return { name: 'settings-outline' as const, color: '#d8c39a' };
       case 'connect':
-        return '✓';
+        return { name: 'checkmark-outline' as const, color: '#d8c39a' };
       case 'power':
-        return '⏻';
+        return { name: 'power-outline' as const, color: '#d8c39a' };
       case 'delete':
-        return '🗑️';
+        return { name: 'trash-outline' as const, color: '#d8c39a' };
       default:
-        return '•';
+        return { name: 'ellipse-outline' as const, color: '#d8c39a' };
     }
   };
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
+      <View style={[styles.header, { marginTop: screenHeight * 0.05 }]}>
         <Text style={styles.title}>Lịch sử</Text>
         <TouchableOpacity style={styles.calendarBtn}>
-          <Text style={styles.calendarIcon}>📅</Text>
+          <Ionicons name="calendar-outline" size={24} color="#d5e2f1" />
         </TouchableOpacity>
       </View>
 
@@ -133,7 +135,11 @@ export default function History() {
 
             <View style={styles.activityBody}>
               <View style={styles.iconContainer}>
-                <Text style={styles.activityIcon}>{getActivityIcon(activity.type)}</Text>
+                <Ionicons
+                  name={getActivityIcon(activity.type).name}
+                  size={26}
+                  color={getActivityIcon(activity.type).color}
+                />
               </View>
               <View style={styles.activityInfo}>
                 <Text style={styles.actionText}>{activity.action}</Text>
@@ -154,48 +160,49 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
+    paddingBottom: 12,
   },
   title: { 
     color: '#fff', 
     fontSize: 20, 
     fontWeight: '600',
-    flex: 1,
     textAlign: 'center',
   },
   calendarBtn: {
-    width: 36,
-    height: 36,
+    position: 'absolute',
+    right: 16,
+    width: 40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.05)',
   },
-  calendarIcon: { fontSize: 20 },
   filterContainer: {
-    maxHeight: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
+    maxHeight: 64,
   },
   filterContent: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    gap: 8,
+    paddingVertical: 8,
+    gap: 10,
   },
   filterTab: {
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
+    minWidth: 100,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 10,
     backgroundColor: 'rgba(255,255,255,0.05)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   filterTabActive: {
     backgroundColor: '#d4a574',
   },
   filterText: {
     color: '#9ca3af',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '500',
   },
   filterTextActive: {
@@ -207,13 +214,13 @@ const styles = StyleSheet.create({
   listHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 14,
     marginBottom: 12,
   },
   listTitle: {
     color: '#60a5fa',
-    fontSize: 11,
-    fontWeight: '700',
+    fontSize: 13,
+    fontWeight: '600',
     letterSpacing: 0.5,
     marginRight: 8,
   },
@@ -225,20 +232,20 @@ const styles = StyleSheet.create({
   },
   countText: {
     color: '#60a5fa',
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: '600',
   },
   activityCard: {
-    backgroundColor: 'rgba(30, 41, 59, 0.8)',
-    borderRadius: 12,
+    backgroundColor: 'rgba(35, 53, 81, 0.92)',
+    borderRadius: 14,
     padding: 16,
-    marginBottom: 12,
+    marginBottom: 14,
   },
   activityHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   deviceName: {
     color: '#fff',
@@ -252,18 +259,18 @@ const styles = StyleSheet.create({
   activityBody: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.06)',
+    paddingTop: 14,
   },
   iconContainer: {
-    width: 44,
-    height: 44,
+    width: 54,
+    height: 54,
     backgroundColor: 'rgba(255,255,255,0.05)',
-    borderRadius: 22,
+    borderRadius: 27,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
-  },
-  activityIcon: {
-    fontSize: 20,
   },
   activityInfo: {
     flex: 1,
@@ -278,6 +285,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   bottomSpacer: {
-    height: 40,
+    height: 20,
   },
 });
