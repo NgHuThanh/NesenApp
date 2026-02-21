@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Path, Svg } from 'react-native-svg';
 
 const LEFT_TABS = [
@@ -19,6 +20,7 @@ const CENTER_CURVE_PATH = 'M0 0 C 0 66, 48 100, 100 100 L100 100 L0 100 Z';
 export default function BottomNavigator() {
   const router = useRouter();
   const pathname = usePathname();
+  const insets = useSafeAreaInsets();
 
   const isActive = (key: string) => {
     if (key === 'home') return pathname === '/home';
@@ -73,12 +75,14 @@ export default function BottomNavigator() {
         <View style={[styles.sidePanel, styles.rightPanel]}>{RIGHT_TABS.map(renderTab)}</View>
       </View>
 
+      <View style={[styles.safeInsetFill, { height: insets.bottom }]} />
+
       <TouchableOpacity style={styles.homeTouch} onPress={() => router.navigate('./home' as never)}>
         <View style={styles.homeOuterCircle}>
           <View style={styles.homeCircle}>
             <Ionicons
               name="home"
-              size={24}
+              size={28}
               color={isActive('home') ? '#223350' : '#314563'}
             />
           </View>
@@ -97,6 +101,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     backgroundColor: 'transparent',
   },
+  safeInsetFill: {
+    backgroundColor: '#0b1720',
+  },
   rowShell: {
     height: 60,
     flexDirection: 'row',
@@ -114,10 +121,10 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   leftPanel: {
-    borderTopRightRadius: 25,
+    borderTopRightRadius: 24,
   },
   rightPanel: {
-    borderTopLeftRadius: 18,
+    borderTopLeftRadius: 24,
   },
   centerGap: {
     width: '20%',
@@ -164,23 +171,23 @@ const styles = StyleSheet.create({
   },
   homeTouch: {
     position: 'absolute',
-    top: -28,
+    top: -34,
     left: '50%',
-    transform: [{ translateX: -35 }],
+    transform: [{ translateX: -42 }],
   },
   homeOuterCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 30,
+    width: 84,
+    height: 84,
+    borderRadius: 42,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
     
   },
   homeCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 58,
+    width: 60,
+    height: 60,
+    borderRadius: 33,
     backgroundColor: '#e6d5be',
     alignItems: 'center',
     justifyContent: 'center',

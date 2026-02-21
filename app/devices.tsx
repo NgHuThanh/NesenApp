@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Modal, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 interface Device {
   id: string;
@@ -48,6 +48,7 @@ const DEMO_DEVICES: Device[] = [
 
 export default function Devices() {
   const router = useRouter();
+  const { height: screenHeight } = useWindowDimensions();
   const [devices, setDevices] = useState<Device[]>(DEMO_DEVICES);
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
   const [showMenu, setShowMenu] = useState(false);
@@ -81,7 +82,7 @@ export default function Devices() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
+      <View style={[styles.header, { marginTop: screenHeight * 0.05 }]}>
         <Text style={styles.title}>Quản lý thiết bị</Text>
         <TouchableOpacity 
           style={styles.addBtn} 
@@ -115,6 +116,8 @@ export default function Devices() {
                 <Text style={styles.menuIcon}>⋮</Text>
               </TouchableOpacity>
             </View>
+
+            <View style={styles.cardDivider} />
 
             <View style={styles.deviceContent}>
               <View style={styles.deviceIcon}>
@@ -213,22 +216,22 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
+    paddingBottom: 12,
   },
-  title: { color: '#fff', fontSize: 20, fontWeight: '600', flex: 1, textAlign: 'center' },
+  title: { color: '#fff', fontSize: 20, fontWeight: '600', textAlign: 'center' },
   addBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    position: 'absolute',
+    right: 16,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: 'rgba(255,255,255,0.1)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  addBtnText: { color: '#fff', fontSize: 24, fontWeight: '300' },
+  addBtnText: { color: '#fff', fontSize: 28, fontWeight: '300', lineHeight: 28 },
   container: { flex: 1, padding: 16 },
   containerContent: { paddingBottom: 120 },
   listHeader: {
@@ -251,55 +254,62 @@ const styles = StyleSheet.create({
   },
   badgeText: { color: '#60a5fa', fontSize: 12, fontWeight: '600' },
   deviceCard: {
-    backgroundColor: 'rgba(30, 41, 59, 0.8)',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    backgroundColor: '#22324b',
+    borderRadius: 22,
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 14,
+    marginBottom: 16,
   },
   statusRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   statusBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    backgroundColor: 'rgba(255,255,255,0.05)',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 16,
+    backgroundColor: 'transparent',
   },
   statusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: '#6b7280',
-    marginRight: 6,
+    marginRight: 8,
   },
   statusDotActive: { backgroundColor: '#10b981' },
-  statusText: { color: '#9ca3af', fontSize: 12 },
-  statusTextActive: { color: '#10b981' },
-  menuBtn: { padding: 4 },
-  menuIcon: { color: '#9ca3af', fontSize: 20 },
+  statusText: { color: '#9ca3af', fontSize: 13, fontWeight: '500' },
+  statusTextActive: { color: '#34d399' },
+  menuBtn: { padding: 2 },
+  menuIcon: { color: '#9ca3af', fontSize: 20, lineHeight: 20 },
+  cardDivider: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.08)',
+    marginBottom: 10,
+  },
   deviceContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   deviceIcon: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'rgba(212, 165, 116, 0.2)',
-    borderRadius: 8,
+    width: 62,
+    height: 62,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: 31,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
   },
-  deviceEmoji: { fontSize: 32 },
+  deviceEmoji: { fontSize: 30 },
   deviceInfo: { flex: 1 },
-  deviceName: { color: '#fff', fontSize: 16, fontWeight: '600', marginBottom: 4 },
-  deviceLocation: { color: '#9ca3af', fontSize: 13, marginBottom: 2 },
-  deviceDate: { color: '#6b7280', fontSize: 12 },
+  deviceName: { color: '#fff', fontSize: 16, fontWeight: '700', marginBottom: 6 },
+  deviceLocation: { color: '#a7b1c2', fontSize: 12, marginBottom: 4 },
+  deviceDate: { color: '#8a95a8', fontSize: 11 },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
