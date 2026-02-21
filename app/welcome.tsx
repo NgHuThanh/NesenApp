@@ -13,7 +13,7 @@ export default function Welcome() {
     >
       <SafeAreaView style={styles.safe}>
         <View style={styles.headerRow}>
-          <TouchableOpacity onPress={() => router.back()}>
+          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
             <Text style={styles.backIcon}>‹</Text>
           </TouchableOpacity>
           <View style={styles.logoWrap}>
@@ -33,12 +33,12 @@ export default function Welcome() {
           </TouchableOpacity>
 
           <View style={styles.orbitWrap}>
-            <View style={styles.orbit1} />
-            <View style={styles.orbit2} />
-            <View style={styles.orbit3} />
+           
 
-            <Text style={styles.welcomeBold}>Chào Linh Trần,</Text>
-            <Text style={styles.welcomeText}>Thiết bị của bạn đã sẵn sàng!</Text>
+            <View style={styles.welcomeTextWrap}>
+              <Text style={styles.welcomeBold}>Chào Linh Trần,</Text>
+              <Text style={styles.welcomeText}>Thiết bị của bạn đã sẵn sàng!</Text>
+            </View>
           </View>
 
           <TouchableOpacity style={styles.startBtn} onPress={() => router.replace('./home')}>
@@ -52,18 +52,30 @@ export default function Welcome() {
 
 const styles = StyleSheet.create({
   backgroundImage: { flex: 1, width: '100%', height: '100%' },
-  safe: { flex: 1, backgroundColor: 'transparent', paddingHorizontal: 16 },
+  safe: { flex: 1, backgroundColor: 'transparent', paddingHorizontal: 16, paddingTop: 8 },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 2,
+    marginTop: 20,
+    height: 52,
+  },
+  backBtn: {
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backIcon: { color: '#dbe7f4', fontSize: 38, lineHeight: 38 },
-  logoWrap: { alignItems: 'center' },
+  logoWrap: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   logo: { color: '#f7f0e3', fontSize: 40, fontWeight: '500' },
   tagline: { color: '#f7f0e3', fontSize: 14, marginTop: -6 },
-  fakeRight: { width: 24 },
+  fakeRight: {
+    width: 40,
+  },
   content: { flex: 1, alignItems: 'center' },
   avatarCircle: {
     width: 96,
@@ -79,16 +91,20 @@ const styles = StyleSheet.create({
   addPhotoBtn: {
     backgroundColor: '#dfcfb4',
     borderRadius: 8,
-    paddingHorizontal: 18,
+    paddingHorizontal: 30,
     paddingVertical: 8,
-    marginBottom: 24,
+    
   },
-  addPhotoText: { color: '#24344f', fontSize: 28, fontWeight: '600' },
+  addPhotoText: { color: '#24344f', fontSize: 18, fontWeight: '400' },
   orbitWrap: {
     width: '100%',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  welcomeTextWrap: {
+    marginTop: -92,
+    alignItems: 'center',
   },
   orbit1: {
     position: 'absolute',
@@ -115,8 +131,8 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderColor: 'rgba(183, 205, 233, 0.2)',
   },
-  welcomeBold: { color: '#e6d5be', fontSize: 38, fontWeight: '700', marginBottom: 6 },
-  welcomeText: { color: '#dbe7f4', fontSize: 32 },
+  welcomeBold: { color: '#e6d5be', fontSize: 24, fontWeight: '500', marginBottom: 6 },
+  welcomeText: { color: '#dbe7f4', fontSize: 20 },
   startBtn: {
     width: '95%',
     backgroundColor: '#dfcfb4',
@@ -125,5 +141,5 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     marginBottom: 20,
   },
-  startText: { color: '#24344f', fontSize: 30, fontWeight: '600' },
+  startText: { color: '#24344f', fontSize: 18, fontWeight: '400' },
 });
